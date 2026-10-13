@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:rihla/widgets/home_header.dart';
+import 'package:rihla/widgets/search_box.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key}); 
   
-  @override Widget build(BuildContext context) { 
+  @override
+  Widget build(BuildContext context) { 
     return Scaffold( 
       body: SafeArea( 
         child: ListView( 
           padding: const EdgeInsets.all(20),
           children: [ 
-            const Text('Rihla arrive bientôt…'), 
+            const HomeHeader(prenom: "Dhaker ben lamine "), 
+            const SizedBox(height: 20),
+            const SearchBox(),
           ],
        ),
      ), 
