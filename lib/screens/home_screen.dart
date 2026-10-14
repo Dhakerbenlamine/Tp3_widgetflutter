@@ -4,6 +4,8 @@ import 'package:rihla/widgets/home_header.dart';
 import 'package:rihla/widgets/search_box.dart';
 import 'package:rihla/data/destinations.dart';
 import 'package:rihla/widgets/hero_banner.dart';
+import 'package:rihla/widgets/destinations_card.dart';
+import 'package:rihla/widgets/section_title.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key}); 
   
@@ -18,6 +20,26 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 20),
             const SearchBox(),
             HeroBanner(destination: destinations.first),
+            const SizedBox(height: 24),
+
+            
+            const SectionTitle(
+              title: 'Catégories',
+            ),
+
+            const SizedBox(height: 16),
+
+            
+            const SectionTitle(
+              title: 'Populaires',
+              action: 'Voir tout',
+            ),
+
+            const SizedBox(height: 12),
+
+            
+            for (final d in destinations)
+              DestinationCard(destination: d),
           ],
        ),
      ), 
