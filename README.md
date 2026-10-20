@@ -28,3 +28,23 @@ Execution du travail :
 
 
 <img width="1919" height="1079" alt="Capture d&#39;écran 2026-10-14 193539" src="https://github.com/user-attachments/assets/ad2b3f73-9735-4931-b20c-8bcf19a1b5bc" />
+
+Execution du palier 5: 
+
+
+<img width="1917" height="1078" alt="Capture d&#39;écran 2026-10-20 102456" src="https://github.com/user-attachments/assets/aed214eb-52ef-4755-af7b-05c3d4a929cc" />
+<img width="1917" height="1078" alt="Capture d&#39;écran 2026-10-20 094908" src="https://github.com/user-attachments/assets/470adb75-0822-4fc0-b571-c3c5f777ce73" />
+<img width="1917" height="1067" alt="Capture d&#39;écran 2026-10-20 094900" src="https://github.com/user-attachments/assets/b9332c52-158b-441c-b62d-5682ee3281fa" />
+
+
+Execution du palier 6:
+
+
+<img width="1917" height="1078" alt="Capture d&#39;écran 2026-10-20 102505" src="https://github.com/user-attachments/assets/b1249fac-0c1b-4644-b28f-7fec635de3da" />
+
+
+Execution du palier 7:
+<img width="1918" height="1078" alt="palier2" src="https://github.com/user-attachments/assets/0ca8df1f-297d-4c46-8dc9-358286edbe36" />
+<img width="1912" height="1078" alt="Capture d&#39;écran 2026-10-20 104207" src="https://github.com/user-attachments/assets/022f4f7f-e708-44d3-85e6-4b9dc1eb1a8b" />
+<img width="1917" height="1078" alt="Capture d&#39;écran 2026-10-20 104202" src="https://github.com/user-attachments/assets/beadaf76-5a56-42ae-9fc7-b9b7bb368594" />
+
