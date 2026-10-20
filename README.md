@@ -44,7 +44,7 @@ Execution du palier 6:
 
 
 Execution du palier 7:
-<img width="1918" height="1078" alt="palier2" src="https://github.com/user-attachments/assets/0ca8df1f-297d-4c46-8dc9-358286edbe36" />
+
 <img width="1912" height="1078" alt="Capture d&#39;écran 2026-10-20 104207" src="https://github.com/user-attachments/assets/022f4f7f-e708-44d3-85e6-4b9dc1eb1a8b" />
 <img width="1917" height="1078" alt="Capture d&#39;écran 2026-10-20 104202" src="https://github.com/user-attachments/assets/beadaf76-5a56-42ae-9fc7-b9b7bb368594" />
 
