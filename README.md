@@ -48,3 +48,10 @@ Execution du palier 7:
 <img width="1912" height="1078" alt="Capture d&#39;écran 2026-10-20 104207" src="https://github.com/user-attachments/assets/022f4f7f-e708-44d3-85e6-4b9dc1eb1a8b" />
 <img width="1917" height="1078" alt="Capture d&#39;écran 2026-10-20 104202" src="https://github.com/user-attachments/assets/beadaf76-5a56-42ae-9fc7-b9b7bb368594" />
 
+
+
+
+Execution du Devoir : 
+
+<img width="943" height="1078" alt="image" src="https://github.com/user-attachments/assets/7f6b9d1a-3270-4ab7-b807-ff85cf46ac3c" />
+
