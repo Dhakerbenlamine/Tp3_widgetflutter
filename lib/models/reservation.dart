@@ -7,7 +7,8 @@ class Reservation {
   final String telephone;
   final DateTime dateDepart;
   final int voyageurs;
-  final String formule; // 'Essentiel' ou 'Confort'
+  final String formule;
+    // 'Essentiel' ou 'Confort'
  
   const Reservation({
     required this.destination,
