@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/destination.dart';
+import '../models/reservation.dart';
 import '../widgets/favourite_button.dart';
 import 'reservation_screen.dart';
 class DetailScreen extends StatefulWidget {
@@ -16,7 +17,54 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
   int _voyageurs = 1;
+  Future<void> _reserver() async {
+  // Ouvrir ReservationScreen et attendre le résultat
+  final reservation = await Navigator.push<Reservation>(
+    context,
+    MaterialPageRoute(
+      builder: (context) => ReservationScreen(
+        destination: widget.destination,
+        voyageurs: _voyageurs,
+      ),
+    ),
+  );
 
+  // TODO 3 : si aucune réservation n'est renvoyée
+  if (reservation == null) return;
+
+  // TODO 4 : vérifier que l'écran existe toujours
+  if (!mounted) return;
+
+  // TODO 5 : afficher la confirmation
+  await showDialog<void>(
+    context: context,
+    builder: (context) => AlertDialog(
+      icon: const Icon(
+        Icons.check_circle,
+        color: Colors.green,
+        size: 48,
+      ),
+
+      title: const Text('Réservation confirmée'),
+
+      content: Text(
+        'Nom : ${reservation.nom}\n'
+        'Destination : ${reservation.destination.nom}\n'
+        'Voyageurs : ${reservation.voyageurs}\n'
+        'Formule : ${reservation.formule}\n'
+        'Total : ${reservation.total} DT\n'
+        'E-mail : ${reservation.email}',
+      ),
+
+      actions: [
+        FilledButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Parfait'),
+        ),
+      ],
+    ),
+  );
+}
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -37,10 +85,13 @@ class _DetailScreenState extends State<DetailScreen> {
                 fit: StackFit.expand,
                 children: [
                   // Image de la destination
-                  Image.asset(
-                    destination.image,
-                    fit: BoxFit.cover,
-                  ),
+                 Hero(
+                  tag: 'image-${widget.destination.nom}',
+                  child: Image.asset(
+                  widget.destination.image,
+                  fit: BoxFit.cover,
+  ),
+),
 
                   // Dégradé pour améliorer la visibilité des boutons
                   const DecoratedBox(
@@ -336,17 +387,8 @@ class _DetailScreenState extends State<DetailScreen> {
               // Bouton Réserver
               Expanded(
                 child: FilledButton(
-                  onPressed: () {
-                    Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                    builder: (context) => ReservationScreen(
-                    destination: widget.destination,
-                   voyageurs: _voyageurs,
-      ),
-    ),
-  );
-                  },
+                  onPressed:_reserver,
+                
                   style: FilledButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
                       vertical: 16,

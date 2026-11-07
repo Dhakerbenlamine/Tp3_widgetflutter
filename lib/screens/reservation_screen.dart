@@ -147,22 +147,28 @@ class _ReservationScreenState extends State<ReservationScreen> {
 
   // Valider le formulaire
   void _valider() {
+  if (!_formKey.currentState!.validate()) {
     setState(() {
-      _autoValidation =
-          AutovalidateMode.onUserInteraction;
+      _autoValidation = AutovalidateMode.onUserInteraction;
     });
 
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Formulaire valide'),
-      ),
-    );
+    return;
   }
 
+  // TODO 1 : créer la réservation
+  final reservation = Reservation(
+    destination: widget.destination,
+    nom: _nomCtrl.text.trim(),
+    email: _emailCtrl.text.trim(),
+    telephone: _telCtrl.text.trim(),
+    dateDepart: _date!,
+    voyageurs: widget.voyageurs,
+    formule: _formule,
+  );
+
+  // TODO 2 : fermer l'écran et renvoyer la réservation
+  Navigator.pop(context, reservation);
+}
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
