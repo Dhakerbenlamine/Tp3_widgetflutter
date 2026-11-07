@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/destination.dart';
 import '../widgets/favourite_button.dart';
-
+import 'reservation_screen.dart';
 class DetailScreen extends StatefulWidget {
   final Destination destination;
 
@@ -337,16 +337,15 @@ class _DetailScreenState extends State<DetailScreen> {
               Expanded(
                 child: FilledButton(
                   onPressed: () {
-                    ScaffoldMessenger.of(context)
-                      ..hideCurrentSnackBar()
-                      ..showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            'Réservation de ${destination.nom} : '
-                            '${total.toStringAsFixed(0)} DT',
-                          ),
-                        ),
-                      );
+                    Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                    builder: (context) => ReservationScreen(
+                    destination: widget.destination,
+                   voyageurs: _voyageurs,
+      ),
+    ),
+  );
                   },
                   style: FilledButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
