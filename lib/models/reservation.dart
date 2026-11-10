@@ -1,6 +1,8 @@
+
 import 'destination.dart';
- 
+
 class Reservation {
+  final String? id;
   final Destination destination;
   final String nom;
   final String email;
@@ -8,9 +10,9 @@ class Reservation {
   final DateTime dateDepart;
   final int voyageurs;
   final String formule;
-    // 'Essentiel' ou 'Confort'
- 
+
   const Reservation({
+    this.id,
     required this.destination,
     required this.nom,
     required this.email,
@@ -19,11 +21,26 @@ class Reservation {
     required this.voyageurs,
     required this.formule,
   });
- 
+
   // Formule Confort : +30 % sur le prix par personne.
   int get prixParPersonne => formule == 'Confort'
       ? (destination.prix * 1.3).round()
       : destination.prix;
- 
+
+  // Calcul du prix total
   int get total => prixParPersonne * voyageurs;
+
+  // Transformer la réservation en JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'destinationId': destination.id,
+      'nom': nom,
+      'email': email,
+      'telephone': telephone,
+      'dateDepart': dateDepart.toIso8601String(),
+      'voyageurs': voyageurs,
+      'formule': formule,
+      'total': total,
+    };
+  }
 }

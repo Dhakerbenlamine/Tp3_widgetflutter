@@ -1,8 +1,12 @@
+
 import 'package:flutter/material.dart';
+
 import '../models/destination.dart';
 import '../models/reservation.dart';
+import '../services/api_service.dart';
 import '../widgets/favourite_button.dart';
 import 'reservation_screen.dart';
+
 class DetailScreen extends StatefulWidget {
   final Destination destination;
 
@@ -17,54 +21,81 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
   int _voyageurs = 1;
+
+  // Réserver et envoyer les données au serveur
   Future<void> _reserver() async {
-  // Ouvrir ReservationScreen et attendre le résultat
-  final reservation = await Navigator.push<Reservation>(
-    context,
-    MaterialPageRoute(
-      builder: (context) => ReservationScreen(
-        destination: widget.destination,
-        voyageurs: _voyageurs,
-      ),
-    ),
-  );
 
-  // TODO 3 : si aucune réservation n'est renvoyée
-  if (reservation == null) return;
-
-  // TODO 4 : vérifier que l'écran existe toujours
-  if (!mounted) return;
-
-  // TODO 5 : afficher la confirmation
-  await showDialog<void>(
-    context: context,
-    builder: (context) => AlertDialog(
-      icon: const Icon(
-        Icons.check_circle,
-        color: Colors.green,
-        size: 48,
-      ),
-
-      title: const Text('Réservation confirmée'),
-
-      content: Text(
-        'Nom : ${reservation.nom}\n'
-        'Destination : ${reservation.destination.nom}\n'
-        'Voyageurs : ${reservation.voyageurs}\n'
-        'Formule : ${reservation.formule}\n'
-        'Total : ${reservation.total} DT\n'
-        'E-mail : ${reservation.email}',
-      ),
-
-      actions: [
-        FilledButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text('Parfait'),
+    // Ouvrir ReservationScreen et attendre le résultat
+    final reservation = await Navigator.push<Reservation>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ReservationScreen(
+          destination: widget.destination,
+          voyageurs: _voyageurs,
         ),
-      ],
-    ),
-  );
-}
+      ),
+    );
+
+    // Vérifier si une réservation a été renvoyée
+    if (reservation == null) return;
+
+    // Vérifier que l'écran existe toujours
+    if (!mounted) return;
+
+    // Envoyer la réservation au serveur
+    final String id;
+
+    try {
+      id = await ApiService.creerReservation(reservation);
+    } catch (e) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Envoi impossible : json-server est-il lancé ?',
+          ),
+          backgroundColor: Colors.red,
+        ),
+      );
+
+      return;
+    }
+
+    if (!mounted) return;
+
+    // Afficher la confirmation
+    await showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        icon: const Icon(
+          Icons.check_circle,
+          color: Colors.green,
+          size: 48,
+        ),
+
+        title: const Text('Réservation confirmée'),
+
+        content: Text(
+          'N° de réservation : $id\n'
+          'Nom : ${reservation.nom}\n'
+          'Destination : ${reservation.destination.nom}\n'
+          'Voyageurs : ${reservation.voyageurs}\n'
+          'Formule : ${reservation.formule}\n'
+          'Total : ${reservation.total} DT\n'
+          'E-mail : ${reservation.email}',
+        ),
+
+        actions: [
+          FilledButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Parfait'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -85,15 +116,15 @@ class _DetailScreenState extends State<DetailScreen> {
                 fit: StackFit.expand,
                 children: [
                   // Image de la destination
-                 Hero(
-                  tag: 'image-${widget.destination.nom}',
-                  child: Image.asset(
-                  widget.destination.image,
-                  fit: BoxFit.cover,
-  ),
-),
+                  Hero(
+                    tag: 'image-${widget.destination.nom}',
+                    child: Image.asset(
+                      widget.destination.image,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
 
-                  // Dégradé pour améliorer la visibilité des boutons
+                  // Dégradé
                   const DecoratedBox(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
@@ -125,7 +156,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     ),
                   ),
 
-                  // Bouton Favori existant
+                  // Bouton Favori
                   const Positioned(
                     top: 16,
                     right: 16,
@@ -142,7 +173,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Nom, région et note sur la même ligne
+                    // Nom, région et note
                     Row(
                       children: [
                         Expanded(
@@ -215,7 +246,7 @@ class _DetailScreenState extends State<DetailScreen> {
 
                     const SizedBox(height: 24),
 
-                    // 3. Trois tuiles : Durée, Type et Groupe
+                    // 3. Trois tuiles
                     Row(
                       children: [
                         Expanded(
@@ -387,8 +418,7 @@ class _DetailScreenState extends State<DetailScreen> {
               // Bouton Réserver
               Expanded(
                 child: FilledButton(
-                  onPressed:_reserver,
-                
+                  onPressed: _reserver,
                   style: FilledButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
                       vertical: 16,
