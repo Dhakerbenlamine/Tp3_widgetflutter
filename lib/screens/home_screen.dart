@@ -10,7 +10,10 @@ import 'package:rihla/widgets/section_title.dart';
 import 'package:rihla/data/destinations.dart';
 import 'package:rihla/models/destination.dart';
 import 'package:rihla/services/api_service.dart';
+import 'package:provider/provider.dart';
 
+import 'package:rihla/providers/favoris_model.dart';
+import 'package:rihla/screens/favoris_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -186,16 +189,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
+    final nombre = context.watch<FavorisModel>().nombre;
     return Scaffold(
 
-      body: _onglet == 0
-          ? SafeArea(
-              child: _construireExplorer(),
-            )
-          : const Center(
-              child: Text('Bientôt disponible'),
-            ),
+      body: SafeArea(
+  child: switch (_onglet) {
+    0 => _construireExplorer(),
+    1 => const FavorisScreen(),
+    _ => const Center(child: Text('Bientôt disponible')),
+  },
+),
 
       // Navigation conservée
       bottomNavigationBar: NavigationBar(
@@ -208,7 +211,7 @@ class _HomeScreenState extends State<HomeScreen> {
           });
         },
 
-        destinations: const [
+        destinations:  [
 
           NavigationDestination(
             icon: Icon(Icons.explore_outlined),
@@ -217,10 +220,18 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
 
           NavigationDestination(
-            icon: Icon(Icons.favorite_border),
-            selectedIcon: Icon(Icons.favorite),
-            label: 'Favoris',
+            icon: Badge(
+            isLabelVisible: nombre > 0,
+            label: Text('$nombre'),
+            child: const Icon(Icons.favorite_border),
           ),
+          selectedIcon: Badge(
+          isLabelVisible: nombre > 0,
+          label: Text('$nombre'),
+          child: const Icon(Icons.favorite),
+    ),
+    label: 'Favoris',
+  ),
 
           NavigationDestination(
             icon: Icon(Icons.person_outline),
