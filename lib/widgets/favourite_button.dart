@@ -1,46 +1,37 @@
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class FavoriteButton extends StatefulWidget {
-  const FavoriteButton({super.key});
+import '../models/destination.dart';
+import '../providers/favoris_model.dart';
 
-  @override
-  State<FavoriteButton> createState() => _FavoriteButtonState();
-}
-
-class _FavoriteButtonState extends State<FavoriteButton> {
-  // TODO 1 : état local du favori
-  bool _favori = false;
-
-  void _basculer() {
-    setState(() {
-      _favori = !_favori;
-    });
-
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(
-          content: Text(
-            _favori
-                ? 'Ajouté aux favoris'
-                : 'Retiré des favoris',
-          ),
-          duration: const Duration(seconds: 1),
-        ),
-      );
-  }
+class FavoriteButton extends StatelessWidget {
+  final Destination destination;
+  const FavoriteButton({super.key, required this.destination});
 
   @override
   Widget build(BuildContext context) {
-    // TODO 3 : IconButton qui appelle _basculer ;
+    // lit l'état et se reconstruit quand il change
+    final favori = context.watch<FavorisModel>().estFavori(destination);
+
     return IconButton(
-      onPressed: _basculer,
+      onPressed: () {
+        // demande le changement, sans s'abonner
+        final ajoute = context.read<FavorisModel>().basculer(destination);
+
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(
+              content: Text(ajoute ? 'Ajouté aux favoris' : 'Retiré des favoris'),
+              duration: const Duration(seconds: 1),
+            ),
+          );
+      },
       icon: Icon(
-        _favori ? Icons.favorite : Icons.favorite_border,
-        color: _favori ? Colors.red : null,
+        favori ? Icons.favorite : Icons.favorite_border,
+        color: favori ? Colors.red : null,
       ),
-      tooltip: _favori ? 'Retirer des favoris' : 'Ajouter aux favoris',
+      tooltip: favori ? 'Retirer des favoris' : 'Ajouter aux favoris',
     );
   }
 }

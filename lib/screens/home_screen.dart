@@ -237,6 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(Icons.person_outline),
             selectedIcon: Icon(Icons.person),
             label: 'Réservations',
+            
           ),
 
         ],
