@@ -15,6 +15,8 @@ import 'package:provider/provider.dart';
 import 'package:rihla/providers/favoris_model.dart';
 import 'package:rihla/screens/favoris_screen.dart';
 
+
+import 'package:rihla/providers/reglages_model.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -191,7 +193,21 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final nombre = context.watch<FavorisModel>().nombre;
     return Scaffold(
-
+      appBar: _onglet == 0
+      ? AppBar(
+          title: const Text('Rihla'),
+          actions: [
+            IconButton(
+              icon: Icon(
+                context.watch<ReglagesModel>().sombre
+                    ? Icons.light_mode
+                    : Icons.dark_mode,
+              ),
+              onPressed: () => context.read<ReglagesModel>().basculerTheme(),
+            ),
+          ],
+        )
+      : null,
       body: SafeArea(
   child: switch (_onglet) {
     0 => _construireExplorer(),
