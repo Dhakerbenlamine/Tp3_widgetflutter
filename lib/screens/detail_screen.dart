@@ -48,6 +48,7 @@ class _DetailScreenState extends State<DetailScreen> {
     try {
       id = await ApiService.creerReservation(reservation);
     } catch (e) {
+      if (reservation == null) return;
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
